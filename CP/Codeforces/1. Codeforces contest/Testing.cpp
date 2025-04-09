@@ -1,76 +1,58 @@
 #include <iostream>
-#include <bits/stdc++.h>
+#include <cmath>
+#include <algorithm>
 
-#define ll long long
 using namespace std;
+using ll = long long;
+
+void solve()
+{
+    ll n, m, k;
+    cin >> n >> m >> k;
+
+    // Special case: Only one row
+    if (n == 1)
+    {
+        // When only one row, distribute k desks with minimum bench length
+        cout << ceil((double)k / (m - k + 1)) << endl;
+        return;
+    }
+
+    // Special case: Only one spot per row
+    if (m == 1)
+    {
+        // When only one spot per row, distribute k rows with minimum bench length
+        cout << ceil((double)k / (n - k + 1)) << endl;
+        return;
+    }
+
+    // Average number of seats per row
+    ll seats_per_row = ceil((double)k / n);
+
+    // If seats per row exceed row capacity
+    if (seats_per_row >= m)
+    {
+        cout << min(m, seats_per_row) << endl;
+        return;
+    }
+
+    // Calculate minimum bench length
+    ll res = ceil((double)seats_per_row / (m - seats_per_row + 1));
+
+    cout << res << endl;
+}
 
 int main()
 {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
     int t;
     cin >> t;
 
     while (t--)
     {
-        int n, m;
-        cin >> n >> m;
-
-        vector<long long> x(n);
-        vector<long long> r(n);
-
-        for (int i = 0; i < n; i++)
-        {
-            cin >> x[i];
-        }
-
-        for (int i = 0; i < n; i++)
-        {
-            cin >> r[i];
-        }
-
-        map<long long, vector<pair<long long, long long>>> y_ranges_by_x;
-        for (int i = 0; i < n; i++)
-        {
-            long long center_x = x[i];
-            long long radius = r[i];
-
-            for (long long dx = -radius; dx <= radius; dx++)
-            {
-                long long current_x = center_x + dx;
-                long long max_y_squared = radius * radius - dx * dx;
-
-                if (max_y_squared < 0)
-                    continue;
-
-                long long max_y = floor(sqrt(max_y_squared));
-                y_ranges_by_x[current_x].push_back({-max_y, max_y});
-            }
-        }
-
-        long long total_points = 0;
-        for (auto &[current_x, y_ranges] : y_ranges_by_x)
-        {
-            sort(y_ranges.begin(), y_ranges.end());
-            vector<pair<long long, long long>> merged;
-
-            for (auto &range : y_ranges)
-            {
-                if (merged.empty() || merged.back().second < range.first - 1)
-                {
-                    merged.push_back(range);
-                }
-                else
-                {
-                    merged.back().second = max(merged.back().second, range.second);
-                }
-            }
-
-            for (auto &range : merged)
-            {
-                total_points += (range.second - range.first + 1);
-            }
-        }
-
-        cout << total_points << endl;
+        solve();
     }
 
     return 0;
