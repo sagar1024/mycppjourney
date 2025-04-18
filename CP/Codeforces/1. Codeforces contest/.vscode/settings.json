@@ -61,6 +61,7 @@
     "random": "cpp",
     "typeinfo": "cpp",
     "ostream": "cpp",
-    "cmath": "cpp"
+    "cmath": "cpp",
+    "bitset": "cpp"
   }
 }

@@ -56,3 +56,209 @@
 // Let's consider the first example: the string S=NENSNE. One of the possible solutions, shown in the figure below, is p=RRHRRH, using which both the rover and the helicopter will end up one meter north and one meter east.
 // For WWW, the solution is impossible.
 
+// #include <iostream>
+// #include <bits/stdc++.h>
+
+// #define ll long long
+// using namespace std;
+
+// void solve()
+// {
+//     int n;
+//     cin >> n;
+
+//     string s;
+//     cin >> s;
+
+//     int x = 0, y = 0;
+//     for(int i=0; i<n; i++)
+//     {
+//         if(s[i]=='N') y++;
+//         else if(s[i]=='S') y--;
+//         else if(s[i]=='E') x++;
+//         else if(s[i]=='W') x--;
+//     }
+
+//     if(x%2==1 || y%2==1)
+//     {
+//         cout << "NO" << endl;
+//         return;
+//     }
+
+//     string ans;
+//     int rx=0, ry=0, hx=0, hy=0;
+//     for(int i=0; i<n; i++)
+//     {
+//         if(s[i]=='N')
+//         {
+//             if(abs(ry-hy)<1)
+//             {
+//                 ry++;
+//                 ans += 'R';
+//             }
+//             else
+//             {
+//                 hy++;
+//                 ans += 'H';
+//             }
+//         }
+//         else if(s[i]=='S')
+//         {
+//             if(abs(ry-hy)<1)
+//             {
+//                 ry--;
+//                 ans += 'R';
+//             }
+//             else
+//             {
+//                 hy--;
+//                 ans += 'H';
+//             }
+//         }
+//         else if(s[i]=='E')
+//         {
+//             if(abs(rx-hx)<1)
+//             {
+//                 rx++;
+//                 ans += 'R';
+//             }
+//             else
+//             {
+//                 hx++;
+//                 ans += 'H';
+//             }
+//         }
+//         else
+//         {
+//             if(abs(rx-hx)<1)
+//             {
+//                 rx--;
+//                 ans += 'R';
+//             }
+//             else
+//             {
+//                 hx--;
+//                 ans += 'H';
+//             }
+//         }
+//     }
+
+//     if(rx==hx && ry==hy) cout << ans << endl;
+//     else cout << "NO" << endl;
+
+//     return;
+// }
+
+// int32_t main()
+// {
+//     int t;
+//     cin >> t;
+
+//     while(t--)
+//     {
+//         solve();
+//     }
+
+//     return 0;
+// }
+
+#include <iostream>
+#include <string>
+#include <bits/stdc++.h>
+
+#define ll long long
+using namespace std;
+
+void solve()
+{
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+
+    int dx = 0, dy = 0;
+    for (char c : s)
+    {
+        if (c == 'N')
+            dy++;
+        if (c == 'S')
+            dy--;
+        if (c == 'E')
+            dx++;
+        if (c == 'W')
+            dx--;
+    }
+
+    if (dx % 2 != 0 || dy % 2 != 0)
+    {
+        cout << "NO\n";
+        return;
+    }
+
+    int targetX = dx / 2, targetY = dy / 2;
+
+    string ans = "";
+    int currX = 0, currY = 0;
+    int usedR = 0, usedH = 0;
+
+    for (char c : s)
+    {
+        bool giveToR = false;
+
+        if (c == 'N' && targetY > 0)
+        {
+            targetY--;
+            giveToR = true;
+        }
+        else if (c == 'S' && targetY < 0)
+        {
+            targetY++;
+            giveToR = true;
+        }
+        else if (c == 'E' && targetX > 0)
+        {
+            targetX--;
+            giveToR = true;
+        }
+        else if (c == 'W' && targetX < 0)
+        {
+            targetX++;
+            giveToR = true;
+        }
+
+        if (giveToR)
+        {
+            ans += 'R';
+            usedR++;
+        }
+        else
+        {
+            ans += 'H';
+            usedH++;
+        }
+    }
+
+    if (usedR == 0 || usedH == 0)
+    {
+        cout << "NO\n";
+    }
+    else
+    {
+        cout << ans << "\n";
+    }
+
+    return;
+}
+
+int main()
+{
+    int t;
+    cin >> t;
+
+    while (t--)
+    {
+        solve();
+    }
+    
+    return 0;
+}
