@@ -45,3 +45,120 @@
 // In the second test case, we can buy 0 cards of type 1 and 4 cards of type 2, and then we rearrange the cards as following: [1,2,1,2,1,2,1,2,1,2,1,2,1,2,1,2]. There are 8 subarrays equal to [1,2] and 7 subarrays equal to [2,1], which make a total of 15 subarrays which are a permutation of [1,2]. It can also be proved that this is the maximum score we can get.
 // In the third test case, one of the possible optimal rearrangements is [3,3,1,2,3,1,2,3,1,2,3,1,2,3,1,2,3,1,3].
 
+//My original soln -
+
+// #include <iostream>
+// #include <bits/stdc++.h>
+
+// #define ll long long
+// using namespace std;
+
+// void solve()
+// {
+//     ll int n, k;
+//     cin >> n >> k;
+
+//     vector<ll int> a(n);
+//     for(int i=0; i<n; i++)
+//     {
+//         cin >> a[i];
+//     }
+
+//     sort(a.begin(),a.end());
+//     vector<ll int> diff;
+//     for(int i=1; i<n; i++)
+//     {
+//         diff.push_back(abs(a[i-1]-a[i]));
+//     }
+
+//     ll int ans = a[0];
+//     for(int i=0; i<diff.size(); i++)
+//     {
+//         for(int j=1; j<=diff[i]; j++)
+//         {
+//             k -= i+1;
+//             if(k<=0) break;
+//             ans++;
+//         }
+//         if(k<=0) break;
+//     }
+
+//     cout << ans << endl;
+//     return;
+// }
+
+// int32_t main()
+// {
+//     int t;
+//     cin >> t;
+
+//     while(t--)
+//     {
+//         solve();
+//     }
+
+//     return 0;
+// }
+
+//Alternate soln -
+
+#include <iostream>
+#include <bits/stdc++.h>
+
+#define ll long long
+using namespace std;
+
+bool canMakeX(vector<ll int> &a, ll int k, ll int x) {
+    ll int need = 0;
+    for (int i = 0; i < a.size(); i++) {
+        if (a[i] < x) {
+            need += (x - a[i]);
+            if (need > k) return false;
+        }
+    }
+    return need <= k;
+}
+
+void solve()
+{
+    ll int n, k;
+    cin >> n >> k;
+
+    vector<ll int> a(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+
+    ll int low = 0, high = 1e18;
+    ll int ans = 0;
+    while (low <= high)
+    {
+        ll int mid = (low + high) / 2;
+        if (canMakeX(a, k, mid))
+        {
+            ans = mid;
+            low = mid + 1;
+        }
+        else
+        {
+            high = mid - 1;
+        }
+    }
+
+    cout << ans << endl;
+    return;
+}
+
+int32_t main()
+{
+    int t;
+    cin >> t;
+
+    while (t--)
+    {
+        solve();
+    }
+
+    return 0;
+}
