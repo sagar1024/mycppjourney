@@ -50,37 +50,39 @@ void solve()
     // if(n % p == 0 && m == q * (n / p))
     // if(n%p!=0 && q*(n-p+1) == m*p)
     // if(m == q*(n-p+1))
-    // if(n%p == m%q)
-    //  {
-    //      cout << "YES\n";
-    //  }
-    //  else
-    //  {
-    //      cout << "NO\n";
-    //  }
-
-    vector<int> a(n, 0);
-    if (n > 2 * p)
+    // if (n % p == m % q)
+    if (n % p == 0)
     {
-        for (int j = 0; j < p; j++) a[j] = j + 1;
-        for (int j = n - 1; j >= n - p; j--) a[j] = j + 1;
-        for(int i=0; i<n; i++)
-        {
-            if(a[i]==0) a[i] = p;
-        }
+        if(m==(n/p)*q) cout << "YES\n";
+        else cout << "NO\n";
     }
     else
     {
-        for(int i=0; i<p; i++) a[i] = i+1;
-        for(int i=p; i<n; i++) a[i] = p;
-        for(int i=n-1; i>=0; i--) a[i] = min(a[i],n-i);
+        cout << "YES\n";
     }
 
-    ll int sum = 0;
-    for(int i=0; i<n; i++) sum += a[i];
+    // vector<int> a(n, 0);
+    // if (n > 2 * p)
+    // {
+    //     for (int j = 0; j < p; j++) a[j] = j + 1;
+    //     for (int j = n - 1; j >= n - p; j--) a[j] = j + 1;
+    //     for(int i=0; i<n; i++)
+    //     {
+    //         if(a[i]==0) a[i] = p;
+    //     }
+    // }
+    // else
+    // {
+    //     for(int i=0; i<p; i++) a[i] = i+1;
+    //     for(int i=p; i<n; i++) a[i] = p;
+    //     for(int i=n-1; i>=0; i--) a[i] = min(a[i],n-i);
+    // }
 
-    if(m==sum) cout << "YES" << endl;
-    else cout << "NO" << endl;
+    // ll int sum = 0;
+    // for(int i=0; i<n; i++) sum += a[i];
+
+    // if(m==sum) cout << "YES" << endl;
+    // else cout << "NO" << endl;
 
     return;
 }
@@ -88,11 +90,13 @@ void solve()
 int32_t main()
 {
     ios::sync_with_stdio(false);
+
     cin.tie(nullptr);
     cout.tie(nullptr);
 
     int t;
     cin >> t;
+    
     while (t--)
     {
         solve();

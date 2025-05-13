@@ -35,3 +35,71 @@
 // In the second testcase, you can't make less than 2 operations. There are multiple answers, let's consider the answer sequence [2,5]. After applying an operation with x=2, the array becomes [⌊4+22⌋,⌊6+22⌋]=[3,4]. After applying an operation with x=5 after that, the array becomes [⌊3+52⌋,⌊4+52⌋]=[4,4]. Both elements are the same, so we are done.
 // In the last testcase, you can't make less than 6 operations. Since 6 is greater than n, you don't have to print them. One possible answer sequence is [0,0,0,0,0,0]. We are just dividing the second element by 2 every time and not changing the first element.
 
+#include <iostream>
+#include <bits/stdc++.h>
+
+#define ll long long
+using namespace std;
+
+void solve()
+{
+    int n;
+    cin >> n;
+
+    vector<ll int> a(n);
+    for(int i=0; i<n; i++)
+    {
+        cin >> a[i];
+    }
+
+    sort(a.begin(),a.end());
+    ll int minn = a[0], maxx = a[n-1];
+    ll int ops = 0;
+    vector<int> ans;
+    while(minn!=maxx)
+    {
+        ll int x = minn%2;
+        if(minn%2==0)
+        {
+            minn = minn/2;
+            maxx = maxx/2;
+        }
+        else
+        {
+            minn = (minn + 1)/2;
+            maxx = (maxx + 1)/2;
+        }
+
+        ans.push_back(x);
+        ops++;
+    }
+
+    cout << ops << endl;
+    if(ops && ops<=n)
+    {
+        for(auto x: ans)
+        {
+            cout << x << " ";
+        }
+    }
+
+    cout << endl;
+    return;
+}
+
+int32_t main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+
+    int t;
+    cin >> t;
+
+    while(t--)
+    {
+        solve();
+    }
+
+    return 0;
+}
